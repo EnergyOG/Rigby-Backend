@@ -20,11 +20,11 @@ app.use("/api/auth", registerRoute);
 
 connect(process.env.MONGO_URI)
   .then(() => {
-    console.log("✅ Connected to MongoDB");
+    console.log("Connected to MongoDB");
     app.listen(PORT, () => {
       console.log(`🚀 Server running at http://localhost:${PORT}`);
     });
   })
   .catch((error) => {
-    console.error("❌ MongoDB connection error:", error);
+    console.error("MongoDB connection error:", error);
   });
