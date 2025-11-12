@@ -16,7 +16,10 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(
   cors({
-    origin: `http://localhost:${PORT}`,
+    origin: [
+      `http://localhost:${PORT}`, 
+      "https://rigby-backend-deploy.onrender.com/api/auth/login"
+    ],
     credentials: true,
   })
 );
