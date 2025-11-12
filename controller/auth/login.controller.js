@@ -29,10 +29,17 @@ class LoginController {
         { expiresIn: "1h" }
       );
 
+      //generate http-only cookie
+      res.cookie('token', token, {
+        httpOnly:true,
+        secure:true,
+        sameSite: 'lax',
+        maxAge: 60 * 60 * 1000,
+      })
+
       // success response
       res.status(200).json({
         message: "Login successful",
-        token,
         user: {
           id: existingUser._id,
           username: existingUser.username,

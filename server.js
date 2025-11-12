@@ -5,6 +5,7 @@ import cors from "cors";
 import helmet from "helmet";
 import loginRoute from "./router/auth/login.route.js";
 import registerRoute from "./router/auth/register.route.js";
+import cookieParser from "cookie-parser";
 
 dotenv.config();
 
@@ -12,7 +13,13 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 app.use(express.json());
-app.use(cors());
+app.use(cookieParser());
+app.use(
+  cors({
+    origin: `http://localhost:${PORT}`,
+    credentials: true,
+  })
+);
 app.use(helmet());
 
 app.use("/api/auth", loginRoute);
