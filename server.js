@@ -9,17 +9,29 @@ import cookieParser from "cookie-parser";
 
 dotenv.config();
 
+const allowedOrigins = [
+  "http://localhost:5173",
+  "http://localhost:3000",
+  "https://rigby-frontend.onrender.com"
+];
+
 const app = express();
 const PORT = process.env.PORT || 5000;
 
 app.use(express.json());
 app.use(cookieParser());
+
 app.use(
   cors({
-    origin: [
-      `http://localhost:${PORT}`, 
-      "https://rigby-backend-deploy.onrender.com/api/auth/login"
-    ],
+    origin: (origin, callback) => {
+      // allow requests with no origin (like mobile apps or curl)
+      if (!origin) return callback(null, true);
+      if (allowedOrigins.includes(origin)) {
+        return callback(null, true);
+      } else {
+        return callback(new Error("CORS not allowed for this origin"), false);
+      }
+    },
     credentials: true,
   })
 );

@@ -16,5 +16,5 @@ const loginSchema = new Schema({
     },
 }, {timestamps: true});
 
-const Login = model('Signup', loginSchema);
+const Login = model('Login', loginSchema);
 export default Login;
