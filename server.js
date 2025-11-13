@@ -10,7 +10,7 @@ import cookieParser from "cookie-parser";
 dotenv.config();
 
 const allowedOrigins = [
-  "http://localhost:5173",
+  "http://localhost:5173/login",
 ];
 
 const app = express();
