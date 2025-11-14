@@ -10,7 +10,8 @@ import cookieParser from "cookie-parser";
 dotenv.config();
 
 const allowedOrigins = [
-  "https://rigby-frontend-deployment-ao8n.onrender.com",
+  "http://localhost:5173",
+  "https://rigby-frontend-deployment.onrender.com",
 ];
 
 const app = express();
