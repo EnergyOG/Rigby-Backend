@@ -21,6 +21,6 @@ const registerSchema = new Schema({
   }
 }, { timestamps: true });
 
-const Register = models.Register || model("Register", registerSchema);
+const Register = models.Register || model("Auth", registerSchema);
 
 export default Register;

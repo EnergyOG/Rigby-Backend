@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken";
-import Register from "../../model/auth/register.model.js";
+import Auth from "../../model/auth/auth.model.js";
 import bcrypt from "bcrypt";
 import dotenv from "dotenv";
 
@@ -11,7 +11,7 @@ class RegisterController {
 
     try {
       // Check if user already exists
-      const existingUser = await Register.findOne({ email });
+      const existingUser = await Auth.findOne({ email });
       if (existingUser) {
         return res.status(400).json({ message: "User already exists" });
       }
@@ -25,7 +25,7 @@ class RegisterController {
       const hashedPassword = await bcrypt.hash(password, 10);
 
       // Save new user (NO confirmPassword saved)
-      const newUser = new Register({
+      const newUser = new Auth({
         username,
         email,
         password: hashedPassword,

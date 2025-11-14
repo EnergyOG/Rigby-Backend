@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken";
-import Login from "../../model/auth/login.model.js";
+import Auth from "../../model/auth/auth.model.js";
 import bcrypt from "bcrypt";
 import dotenv from "dotenv";
 
@@ -11,7 +11,7 @@ class LoginController {
 
     try {
       // check if user exists
-      const existingUser = await Login.findOne({ email });
+      const existingUser = await Auth.findOne({ email });
       if (!existingUser) {
         return res.status(404).json({ message: "User not found" });
       }
