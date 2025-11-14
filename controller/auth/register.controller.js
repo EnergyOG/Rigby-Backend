@@ -24,7 +24,7 @@ class RegisterController {
       // Hash password
       const hashedPassword = await bcrypt.hash(password, 10);
 
-      // Save new user
+      // Save new user (NO confirmPassword saved)
       const newUser = new Register({
         username,
         email,
@@ -40,8 +40,8 @@ class RegisterController {
         { expiresIn: "1h" }
       );
 
-      // Send response
-      res.status(201).json({
+      // Response
+      return res.status(201).json({
         message: "User registered successfully",
         token,
         user: {
@@ -50,9 +50,13 @@ class RegisterController {
           email: newUser.email,
         },
       });
+
     } catch (error) {
       console.error("Registration error:", error);
-      res.status(500).json({ message: "Error registering user", error: error.message });
+      res.status(500).json({
+        message: "Error registering user",
+        error: error.message,
+      });
     }
   };
 }
