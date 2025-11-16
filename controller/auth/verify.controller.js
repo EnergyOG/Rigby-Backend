@@ -1,0 +1,12 @@
+import jwt from "jsonwebtoken";
+
+export const verifyUser = (req, res) => {
+  const token = req.cookies.token;
+  if (!token) return res.status(401).json({ message: "Not authenticated" });
+
+  jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
+    if (err) return res.status(403).json({ message: "Invalid token" });
+
+    return res.status(200).json({ message: "Authenticated", user: decoded });
+  });
+};

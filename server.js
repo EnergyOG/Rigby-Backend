@@ -5,6 +5,8 @@ import cors from "cors";
 import helmet from "helmet";
 import loginRoute from "./router/auth/login.route.js";
 import registerRoute from "./router/auth/register.route.js";
+import logoutRoute from "./router/auth/logout.route.js";
+import verifyUserRoute from "./router/auth/verify.route.js"
 import cookieParser from "cookie-parser";
 
 dotenv.config();
@@ -19,19 +21,19 @@ const PORT = process.env.PORT || 5000;
 
 app.set("trust proxy", 1);
 
-app.use(express.json());
-app.use(cookieParser());
-
 app.use(
   cors({
     origin: allowedOrigins,
     credentials: true,
   })
 );
+
+app.use(express.json());
+app.use(cookieParser());
 app.use(helmet());
 
-app.use("/api/auth", loginRoute);
-app.use("/api/auth", registerRoute);
+app.use("/api/auth", loginRoute, registerRoute, logoutRoute, verifyUserRoute);
+
 
 connect(process.env.MONGO_URI)
   .then(() => {
