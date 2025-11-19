@@ -11,11 +11,6 @@ import cookieParser from "cookie-parser";
 
 dotenv.config();
 
-const allowedOrigins = [
-  "http://localhost:5173",
-  "https://rigby-frontend-deployment.onrender.com",
-];
-
 const app = express();
 const PORT = process.env.PORT || 5000;
 
@@ -23,7 +18,9 @@ app.set("trust proxy", 1);
 
 app.use(
   cors({
-    origin: allowedOrigins,
+    origin: [
+      "http://localhost:5173",
+      "https://rigby-frontend-deployment.onrender.com"],
     credentials: true,
   })
 );
