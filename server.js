@@ -1,6 +1,5 @@
 import { connect } from "mongoose";
 import express from "express";
-import dotenv from "dotenv";
 import cors from "cors";
 import helmet from "helmet";
 import loginRoute from "./router/auth/login.route.js";
@@ -8,21 +7,17 @@ import registerRoute from "./router/auth/register.route.js";
 import logoutRoute from "./router/auth/logout.route.js";
 import verifyUserRoute from "./router/auth/verify.route.js"
 import cookieParser from "cookie-parser";
+import dotenv from "dotenv";
 
-dotenv.config();
+const envFile = process.env.NODE_ENV === "production" ? ".env.production" : ".env.development";
+dotenv.config({ path: envFile });
+
 
 const app = express();
-const PORT = process.env.PORT || 5000;
-
-app.set("trust proxy", 1);
+const port = process.env.NODE_ENV === "production" ? process.env.PROD_PORT : process.env.DEV_PORT;
 
 app.use(
-  cors({
-    origin: [
-      "http://localhost:5173",
-      "https://rigby-frontend-deployment.onrender.com"],
-    credentials: true,
-  })
+  cors()
 );
 
 app.use(express.json());
@@ -35,8 +30,8 @@ app.use("/api/auth", loginRoute, registerRoute, logoutRoute, verifyUserRoute);
 connect(process.env.MONGO_URI)
   .then(() => {
     console.log("Connected to MongoDB");
-    app.listen(PORT, () => {
-      console.log(`🚀 Server running at http://localhost:${PORT}`);
+    app.listen(port, () => {
+      console.log(`🚀 Server running at http://localhost:${port}`);
     });
   })
   .catch((error) => {
